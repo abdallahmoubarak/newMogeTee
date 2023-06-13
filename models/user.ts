@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
@@ -6,8 +6,8 @@ const userSchema = new mongoose.Schema(
     number: { type: String, unique: true },
     otp: { type: String },
     otptimes: { type: Number },
-    jwt: { type: String }
+    jwt: { type: String },
   },
-  { collection: "users" }
+  { collection: "users" },
 );
 export default mongoose.models.User || mongoose.model("User", userSchema);

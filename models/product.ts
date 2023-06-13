@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
   {
@@ -12,9 +12,9 @@ const productSchema = new mongoose.Schema(
     image: { type: String },
     appear: { type: Boolean, default: true },
     exist: { type: Boolean, default: true },
-    hidden: { type: Boolean, default: false }
+    hidden: { type: Boolean, default: false },
   },
-  { collection: "products" }
+  { collection: "products" },
 );
 export default mongoose.models.Product ||
   mongoose.model("Product", productSchema);

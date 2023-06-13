@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const categorySchema = new mongoose.Schema(
   {
@@ -9,10 +9,10 @@ const categorySchema = new mongoose.Schema(
     titleBackground: { type: String },
     titleColor: { type: String },
     background: { type: String },
-    topTitle: { type: String }
+    topTitle: { type: String },
   },
 
-  { collection: "categories" }
+  { collection: "categories" },
 );
 
 export default mongoose.models.Category ||

@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const optionSchema = new mongoose.Schema(
   {
-    rate: { type: Number }
+    rate: { type: Number },
   },
-  { collection: "options" }
+  { collection: "options" },
 );
 export default mongoose.models.Option || mongoose.model("Option", optionSchema);
