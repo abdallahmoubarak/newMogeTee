@@ -3,13 +3,13 @@ import mongoose from "mongoose";
 const categorySchema = new mongoose.Schema(
   {
     name: { type: String },
-    addingDates: { type: Date, default: Date.now },
     description: { type: String },
     hidden: { type: Boolean, default: false },
     titleBackground: { type: String },
     titleColor: { type: String },
     background: { type: String },
     topTitle: { type: String },
+    createdAt: { type: Date, default: Date.now },
   },
 
   { collection: "categories" },
