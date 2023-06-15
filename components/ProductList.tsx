@@ -16,6 +16,7 @@ export default function ProductList({
     <div className="flex flex-wrap gap-2 px-2 ">
       {products?.map((product) => (
         <Product
+          key={product.name}
           product={product}
           rate={rate}
           setSelectedItems={setSelectedItems}
