@@ -14,7 +14,7 @@ export default function sendOrder({
   let message = ``;
   let totalUSD = 0;
 
-  message += `${address}\n---------------------------\n`;
+  message += `Address: ${address}\n---------------------------\n`;
 
   selectedItems.forEach((item: SelectedItem) => {
     const { product, count } = item;
@@ -24,7 +24,7 @@ export default function sendOrder({
   });
   const totalPriceLBP = convertToLL({ usd: totalUSD, rate });
 
-  message += `\n___________________________\nTotal: $${totalUSD.toFixed(
+  message += `\n---------------------------\nTotal: $${totalUSD.toFixed(
     2,
   )} / ${totalPriceLBP}`;
 
