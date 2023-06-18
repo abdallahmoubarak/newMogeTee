@@ -26,7 +26,7 @@ export default function OrderBar({
         <div className="flex flex-col items-center gap-2">
           <button
             onClick={clearSelectedItems}
-            className="w-20 p-1 rounded-sm text-white bg-red-500">
+            className="w-20 p-1 rounded-sm text-white bg-title">
             Clear
           </button>
           <button

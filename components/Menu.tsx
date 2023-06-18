@@ -40,11 +40,9 @@ export default function Menu() {
           setSelected={setSelected}
         />
       )}
-      {categories?.map((category, i) => (
-        <>
-          <div
-            key={category.name}
-            className={`text-4xl text-white font-bold py-2 px-2 bg-title`}>
+      {categories?.map((category) => (
+        <div key={category.name}>
+          <div className={`text-4xl text-white font-bold py-2 px-2 bg-title`}>
             {category?.name}
           </div>
           <div className="text-gray-700 py-2 px-2">{category?.description}</div>
@@ -57,7 +55,7 @@ export default function Menu() {
               setSelectedItems={setSelectedItems}
             />
           </div>
-        </>
+        </div>
       ))}
       {selectedItems.length > 0 && (
         <OrderBar
