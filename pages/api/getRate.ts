@@ -4,7 +4,10 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 dbConnection();
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
   const { method } = req;
 
   if (method === "GET") {
@@ -12,4 +15,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(200).json(options[0].rate);
   }
   return res.status(400).send("invalid");
-};
+}

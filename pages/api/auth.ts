@@ -11,7 +11,10 @@ declare const process: {
   };
 };
 
-export default async function Auth(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
   const { method } = req;
   if (method === "GET") {
     try {
