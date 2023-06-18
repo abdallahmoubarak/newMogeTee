@@ -1,6 +1,7 @@
 import Image from "next/image";
 import convertToLL from "@/utils/convertToLL";
 import { useState } from "react";
+import Button from "./Button";
 
 export default function EditableProduct({
   product,
@@ -76,7 +77,8 @@ export default function EditableProduct({
             />
           )}
           <div className="flex flex-col gap-2">
-            <button
+            <Button
+              text={edit ? "Cancel" : "Edit"}
               onClick={() => {
                 setEdit(!edit);
                 edit && setPrice(product.usdprice);
@@ -84,9 +86,7 @@ export default function EditableProduct({
                 edit && setName(product.name);
                 edit && setExist(product.exist);
               }}
-              className="bg-title text-white py-1 px-4 select-none rounded">
-              {edit ? "Cancel" : "Edit"}
-            </button>
+            />
             {edit &&
               (price !== product.usdprice ||
                 name !== product.name ||

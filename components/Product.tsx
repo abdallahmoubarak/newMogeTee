@@ -53,7 +53,7 @@ export default function Product({
           </div>
         </div>
 
-        <div className="flex flex-col justify-between w-[100px]">
+        <div className="flex flex-col justify-between items-end w-[100px]">
           {product.hasImg && (
             <Image
               src={`/img/products/${product.image}.png`}

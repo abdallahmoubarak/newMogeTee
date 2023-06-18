@@ -53,3 +53,8 @@ interface ModalProps {
   selectedItems: SelectedItem[];
   setModal: Function;
 }
+
+interface ButtonProps {
+  text: string;
+  onClick: () => void;
+}

@@ -1,3 +1,5 @@
+import Button from "./Button";
+
 export default function Controllar({
   count,
   setCount,
@@ -22,11 +24,7 @@ export default function Controllar({
           </div>
         </div>
       ) : (
-        <button
-          onClick={() => setCount(count + 1)}
-          className="bg-title text-white py-1 px-4 select-none rounded">
-          Order
-        </button>
+        <Button text={"Order"} onClick={() => setCount(count + 1)} />
       )}
     </>
   );
