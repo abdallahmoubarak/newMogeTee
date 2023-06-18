@@ -1,18 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import ProductList from "./ProductList";
+import EditableProduct from "./EditableProduct";
 import quicksort from "@/utils/quicksort";
 import TopBar from "./TopBar";
-import OrderBar from "./OrderBar";
-import Modal from "./Modal";
 
-export default function Menu() {
+export default function EditableMenu() {
   const [selected, setSelected] = useState("Fruits Tea");
   const [categories, setCategories] = useState<Category[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [rate, setRate] = useState(95000);
-  const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
-  const [modal, setModal] = useState<boolean>(false);
 
   useEffect(() => {
     axios.get("/api/getCategories").then((res) => setCategories(res.data));
@@ -22,17 +18,8 @@ export default function Menu() {
     axios.get("/api/getRate").then((res) => setRate(JSON.parse(res.data)));
   }, []);
 
-  const clearSelectedItems = () => {
-    if (confirm("Are you sure you want to clear the order?")) {
-      setSelectedItems([]);
-    }
-  };
-
   return (
     <div>
-      {modal && (
-        <Modal selectedItems={selectedItems} rate={rate} setModal={setModal} />
-      )}
       {categories && (
         <TopBar
           categories={categories}
@@ -40,7 +27,8 @@ export default function Menu() {
           setSelected={setSelected}
         />
       )}
-      {categories?.map((category, i) => (
+
+      {categories?.map((category) => (
         <>
           <div
             key={category.name}
@@ -49,24 +37,32 @@ export default function Menu() {
           </div>
           <div className="text-gray-700 py-2 px-2">{category?.description}</div>
           <div className="flex flex-wrap justify-center gap-4 w-full">
-            <ProductList
-              products={products
+            <div className="flex flex-wrap gap-2 px-2 pb-2">
+              {products
                 .filter((product) => product.categoryID === category?._id)
-                .filter((product) => product.appear)}
-              rate={rate}
-              setSelectedItems={setSelectedItems}
-            />
+                .filter((product) => product.appear)
+                ?.map((product) => (
+                  <EditableProduct
+                    key={product.name}
+                    product={product}
+                    rate={rate}
+                  />
+                ))}
+            </div>
           </div>
         </>
       ))}
-      {selectedItems.length > 0 && (
-        <OrderBar
-          rate={rate}
-          selectedItems={selectedItems}
-          clearSelectedItems={clearSelectedItems}
-          setModal={setModal}
+      <div className="sticky bottom-0 p-2 flex justify-between bg-yellow-100 border-t border-title">
+        <span>Rate: </span>{" "}
+        <input
+          value={rate}
+          className="px-2 border border-gray-500 rounded-md"
+          onChange={(e) => setRate(+e.target.value)}
         />
-      )}
+        <button className="bg-green-500 text-white rounded-md px-4 ">
+          done
+        </button>
+      </div>
     </div>
   );
 }

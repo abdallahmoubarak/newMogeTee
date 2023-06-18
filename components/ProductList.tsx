@@ -13,7 +13,7 @@ export default function ProductList({
   setSelectedItems,
 }: ProductListProps) {
   return (
-    <div className="flex flex-wrap gap-2 px-2 ">
+    <div className="flex flex-wrap gap-2 px-2 pb-2">
       {products?.map((product) => (
         <Product
           key={product.name}

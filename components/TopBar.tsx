@@ -18,7 +18,7 @@ export default function TopBar({
     <>
       <div
         ref={topBarRef}
-        className="p-2 py-3 overflow-auto flex items-center gap-2 w-full fixed top-0 bg-white z-10 shadow-md backdrop-filter backdrop-blur-lg bg-opacity-90 scrollbar-hide">
+        className="p-2 py-3 overflow-auto flex items-center gap-2 w-full sticky top-0 bg-white z-10 shadow-md backdrop-filter backdrop-blur-lg bg-opacity-90 scrollbar-hide">
         {categories?.map((category, i) => (
           <a key={i} href={`#${category.name}`}>
             <div

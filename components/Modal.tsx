@@ -3,11 +3,11 @@ import { useState } from "react";
 import { BsWhatsapp } from "react-icons/bs";
 
 export default function Modal({ selectedItems, rate, setModal }: ModalProps) {
-  const [phoneNumber, setPhoneNumber] = useState("96170097533");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
-  const Nabatiehpn = "96170097533";
-  const Beirutpn = "96170097533";
+  const Nabatiehpn = "9613085803";
+  const Beirutpn = "96171446747";
 
   return (
     <div className=" fixed h-screen w-screen z-[100]">
@@ -61,7 +61,7 @@ export default function Modal({ selectedItems, rate, setModal }: ModalProps) {
                 })
               : confirm("Please select city / add address")
           }
-          className="flex items-center justify-center gap-1 text-white bg-green-500 px-4 py-1 rounded mx-auto">
+          className="flex items-center justify-center gap-1 cursor-pointer text-white bg-green-500 px-4 py-1 rounded mx-auto">
           <BsWhatsapp /> Order
         </button>
       </dialog>
