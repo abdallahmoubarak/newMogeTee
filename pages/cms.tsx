@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Sign from "@/components/Sign";
 
-export default function () {
+export default function CMS() {
   const [auth, setAuth] = useState(false);
 
   useEffect(() => {
