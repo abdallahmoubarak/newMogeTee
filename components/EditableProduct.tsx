@@ -2,6 +2,8 @@ import Image from "next/image";
 import convertToLL from "@/utils/convertToLL";
 import { useState } from "react";
 import Button from "./Button";
+import axios from "axios";
+import { FaEyeSlash } from "react-icons/fa";
 
 export default function EditableProduct({
   product,
@@ -15,6 +17,7 @@ export default function EditableProduct({
   const [name, setName] = useState(product?.name);
   const [price, setPrice] = useState(product?.usdprice);
   const [exist, setExist] = useState(product?.exist);
+  const [appear, setAppear] = useState(product.appear);
 
   return (
     <div className="border  rounded-lg border-gray-300  flex-[1_0_20rem]">
@@ -49,10 +52,20 @@ export default function EditableProduct({
                 />
                 Out of stock
               </label>
+              <label className="flex gap-1">
+                <input
+                  type={"checkbox"}
+                  onChange={() => setAppear(!appear)}
+                  checked={!appear}
+                />
+                Disappear
+              </label>
             </div>
           ) : (
             <>
-              <div className="text-xl py-1">{name}</div>
+              <div className="text-xl py-1 flex gap-2">
+                {name} {!appear && <FaEyeSlash />}
+              </div>
               <div className="text-gray-500 text-sm w-full pb-2">
                 {description}
               </div>
@@ -76,7 +89,7 @@ export default function EditableProduct({
               height={260}
             />
           )}
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col items-end gap-2">
             <Button
               text={edit ? "Cancel" : "Edit"}
               onClick={() => {
@@ -85,16 +98,29 @@ export default function EditableProduct({
                 edit && setDescription(product.description);
                 edit && setName(product.name);
                 edit && setExist(product.exist);
+                edit && setAppear(product.appear);
               }}
             />
             {edit &&
               (price !== product.usdprice ||
                 name !== product.name ||
                 description !== product.description ||
-                exist !== product.exist) && (
+                exist !== product.exist ||
+                appear !== product.appear) && (
                 <button
-                  onClick={() => setEdit(!edit)}
-                  className="bg-green-500 text-white py-1 px-4 select-none rounded">
+                  onClick={() => {
+                    axios
+                      .put("/api/updateProduct", {
+                        id: product._id,
+                        name,
+                        usdprice: price,
+                        description,
+                        exist,
+                        appear,
+                      })
+                      .then((res) => res.data === "done" && setEdit(!edit));
+                  }}
+                  className="bg-green-500 text-white px-5 w-fit select-none rounded">
                   Save
                 </button>
               )}

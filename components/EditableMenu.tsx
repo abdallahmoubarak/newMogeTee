@@ -40,7 +40,6 @@ export default function EditableMenu() {
             <div className="flex flex-wrap gap-2 px-2 pb-2">
               {products
                 .filter((product) => product.categoryID === category?._id)
-                .filter((product) => product.appear)
                 ?.map((product) => (
                   <EditableProduct
                     key={product.name}
@@ -59,7 +58,9 @@ export default function EditableMenu() {
           className="px-2 border border-gray-500 rounded-md"
           onChange={(e) => setRate(+e.target.value)}
         />
-        <button className="bg-green-500 text-white rounded-md px-4 ">
+        <button
+          className="bg-green-500 text-white rounded-md px-4"
+          onClick={() => axios.put("/api/updateRate", { rate })}>
           done
         </button>
       </div>
