@@ -9,7 +9,6 @@ export default function EditableMenu() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [rate, setRate] = useState(95000);
-  const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
   const [categoriesTop, setCategoriesTop] = useState<CategoriesTop>({});
   const [yLocation, setYLocation] = useState<number>(0);
   const [scroll, setScroll] = useState<Boolean>(false);
@@ -31,7 +30,6 @@ export default function EditableMenu() {
           [e.id]: e.getBoundingClientRect()?.top + window.scrollY - 50,
         }),
     );
-    console.log(a);
     setCategoriesTop(a);
   }, [products]);
 

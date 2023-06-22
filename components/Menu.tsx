@@ -41,7 +41,6 @@ export default function Menu() {
           [e.id]: e.getBoundingClientRect()?.top + window.scrollY - 50,
         }),
     );
-    console.log(a);
     setCategoriesTop(a);
   }, [products]);
 
