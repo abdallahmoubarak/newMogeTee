@@ -59,7 +59,7 @@ export default function Menu() {
     const getCategoryFromScroll = () => {
       for (const [category, top] of Object.entries(categoriesTop)) {
         if (yLocation >= top) {
-          setSelected(category);
+          !scroll && setSelected(category);
         }
       }
     };
@@ -72,7 +72,7 @@ export default function Menu() {
         top: categoriesTop[selected],
         behavior: "smooth",
       });
-    setScroll(false);
+    setTimeout(() => setScroll(false), 2000);
   }, [selected]);
 
   return (
