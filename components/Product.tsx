@@ -50,6 +50,11 @@ export default function Product({
             ) : (
               <div className="out">Out of stock</div>
             )}
+            {count ? (
+              <div className="pt-3">Subtotal: ${count * product.usdprice}</div>
+            ) : (
+              <div></div>
+            )}
           </div>
         </div>
 
@@ -65,11 +70,6 @@ export default function Product({
           <Controllar count={count} setCount={setCount} />
         </div>
       </div>
-      {count > 0 && (
-        <div className="bg-title text-white px-4 rounded-b-lg">
-          Subtotal: ${count * product.usdprice}
-        </div>
-      )}
     </div>
   );
 }

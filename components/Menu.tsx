@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import ProductList from "./ProductList";
 import quicksort from "@/utils/quicksort";
@@ -12,6 +12,10 @@ export default function Menu() {
   const [products, setProducts] = useState<Product[]>([]);
   const [rate, setRate] = useState(95000);
   const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
+  const [categoriesWithProducts, setCategoriesWithProducts] = useState<
+    Category[]
+  >([]);
+
   const [modal, setModal] = useState<boolean>(false);
 
   useEffect(() => {
@@ -28,6 +32,72 @@ export default function Menu() {
     }
   };
 
+  useEffect(() => {
+    const categoriesWithProducts: Category[] = categories.map((category) => {
+      const categoryProducts: Product[] = products
+        .filter((product) => product.categoryID === category._id)
+        .filter((product) => product.appear);
+
+      const screenWidth: number = window.innerWidth;
+      let numberOfColumns: number;
+      if (screenWidth < 664) {
+        numberOfColumns = 1;
+      } else if (screenWidth < 994) {
+        numberOfColumns = 2;
+      } else {
+        numberOfColumns = 3;
+      }
+      const productsHeight: number =
+        categoryProducts.length * 140 + (categoryProducts.length - 1) * 16;
+
+      const height: number = productsHeight / numberOfColumns;
+      return { ...category, height };
+    });
+
+    categoriesWithProducts.forEach((category, index) => {
+      if (index !== 0) {
+        category.height += categoriesWithProducts[index - 1].height;
+      }
+    });
+
+    setCategoriesWithProducts(categoriesWithProducts);
+  }, [categories, products]);
+
+  const [yLocation, setYLocation] = useState<number>(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setYLocation(window.scrollY);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    categoriesWithProducts.length > 0 &&
+      (() => {
+        const closestCategory = categoriesWithProducts.find(
+          (category) => yLocation <= category.height,
+        );
+
+        closestCategory && setSelected(closestCategory.name);
+      })();
+  }, [yLocation, categoriesWithProducts]);
+
+  //create a useEffect that scroll to selected section
+  useEffect(() => {
+    const selectedCategory = categoriesWithProducts.find(
+      (category) => category.name === selected,
+    );
+    selectedCategory &&
+      window.scrollTo({
+        top: selectedCategory.height,
+        behavior: "smooth",
+      });
+  }, [selected]);
+
   return (
     <div>
       {modal && (
@@ -41,7 +111,13 @@ export default function Menu() {
         />
       )}
       {categories?.map((category) => (
-        <div key={category.name}>
+        <section
+          key={category.name}
+          id={category.name}
+          // ref={(element) => {
+          //   element && sectionRef.current.push(element);
+          // }}
+        >
           <div className={`text-4xl text-white font-bold py-2 px-2 bg-title`}>
             {category?.name}
           </div>
@@ -55,7 +131,7 @@ export default function Menu() {
               setSelectedItems={setSelectedItems}
             />
           </div>
-        </div>
+        </section>
       ))}
       {selectedItems.length > 0 && (
         <OrderBar

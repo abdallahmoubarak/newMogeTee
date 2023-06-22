@@ -1,4 +1,5 @@
 interface Category {
+  height: number;
   _id: string;
   name: string;
   description?: string;

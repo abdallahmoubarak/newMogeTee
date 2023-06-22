@@ -10,7 +10,7 @@ export default function Controllar({
   return (
     <>
       {count > 0 ? (
-        <div className="flex h-9 items-end justify-end ">
+        <div className="flex h-8 items-end justify-end ">
           <div
             onClick={() => setCount(count + 1)}
             className="flex items-center justify-center border-2 border-title rounded-full select-none w-7 h-7 font-bold text-title cursor-pointer">
