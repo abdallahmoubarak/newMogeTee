@@ -5,10 +5,14 @@ import quicksort from "@/utils/quicksort";
 import TopBar from "./TopBar";
 
 export default function EditableMenu() {
-  const [selected, setSelected] = useState("Fruits Tea");
+  const [selected, setSelected] = useState<string>("Fruits Tea");
   const [categories, setCategories] = useState<Category[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [rate, setRate] = useState(95000);
+  const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
+  const [categoriesTop, setCategoriesTop] = useState<CategoriesTop>({});
+  const [yLocation, setYLocation] = useState<number>(0);
+  const [scroll, setScroll] = useState<Boolean>(false);
 
   useEffect(() => {
     axios.get("/api/getCategories").then((res) => setCategories(res.data));
@@ -18,6 +22,49 @@ export default function EditableMenu() {
     axios.get("/api/getRate").then((res) => setRate(JSON.parse(res.data)));
   }, []);
 
+  useEffect(() => {
+    let a: any = {};
+    document.querySelectorAll("section").forEach(
+      (e) =>
+        (a = {
+          ...a,
+          [e.id]: e.getBoundingClientRect()?.top + window.scrollY - 50,
+        }),
+    );
+    console.log(a);
+    setCategoriesTop(a);
+  }, [products]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setYLocation(window.scrollY);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    const getCategoryFromScroll = () => {
+      for (const [category, top] of Object.entries(categoriesTop)) {
+        if (yLocation >= top) {
+          !scroll && setSelected(category);
+        }
+      }
+    };
+    getCategoryFromScroll();
+  }, [yLocation]);
+
+  useEffect(() => {
+    scroll &&
+      window.scrollTo({
+        top: categoriesTop[selected],
+        behavior: "smooth",
+      });
+    setTimeout(() => setScroll(false), 2000);
+  }, [selected]);
+
   return (
     <div>
       {categories && (
@@ -25,6 +72,7 @@ export default function EditableMenu() {
           categories={categories}
           selected={selected}
           setSelected={setSelected}
+          setScroll={setScroll}
         />
       )}
 
