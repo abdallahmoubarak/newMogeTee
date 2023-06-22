@@ -1,4 +1,5 @@
 interface Category {
+  getBoundingClientRect(): unknown;
   height: number;
   _id: string;
   name: string;
@@ -35,6 +36,7 @@ interface TopBarProps {
   categories: Category[];
   selected: string;
   setSelected: (selected: string) => void;
+  setScroll: (scroll: boolean) => void;
 }
 
 interface SelectedItem {
@@ -58,4 +60,8 @@ interface ModalProps {
 interface ButtonProps {
   text: string;
   onClick: () => void;
+}
+
+interface CategoriesTop {
+  [key: string]: number;
 }

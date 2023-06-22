@@ -7,14 +7,14 @@ import OrderBar from "./OrderBar";
 import Modal from "./Modal";
 
 export default function Menu() {
-  const [selected, setSelected] = useState("Fruits Tea");
+  const [selected, setSelected] = useState<string>("Fruits Tea");
   const [categories, setCategories] = useState<Category[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [rate, setRate] = useState(95000);
   const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
-  const [categoriesWithProducts, setCategoriesWithProducts] = useState<
-    Category[]
-  >([]);
+  const [categoriesTop, setCategoriesTop] = useState<CategoriesTop>({});
+  const [yLocation, setYLocation] = useState<number>(0);
+  const [scroll, setScroll] = useState<Boolean>(false);
 
   const [modal, setModal] = useState<boolean>(false);
 
@@ -33,37 +33,17 @@ export default function Menu() {
   };
 
   useEffect(() => {
-    const categoriesWithProducts: Category[] = categories.map((category) => {
-      const categoryProducts: Product[] = products
-        .filter((product) => product.categoryID === category._id)
-        .filter((product) => product.appear);
-
-      const screenWidth: number = window.innerWidth;
-      let numberOfColumns: number;
-      if (screenWidth < 664) {
-        numberOfColumns = 1;
-      } else if (screenWidth < 994) {
-        numberOfColumns = 2;
-      } else {
-        numberOfColumns = 3;
-      }
-      const productsHeight: number =
-        categoryProducts.length * 140 + (categoryProducts.length - 1) * 16;
-
-      const height: number = productsHeight / numberOfColumns;
-      return { ...category, height };
-    });
-
-    categoriesWithProducts.forEach((category, index) => {
-      if (index !== 0) {
-        category.height += categoriesWithProducts[index - 1].height;
-      }
-    });
-
-    setCategoriesWithProducts(categoriesWithProducts);
-  }, [categories, products]);
-
-  const [yLocation, setYLocation] = useState<number>(0);
+    let a: any = {};
+    document.querySelectorAll("section").forEach(
+      (e) =>
+        (a = {
+          ...a,
+          [e.id]: e.getBoundingClientRect()?.top + window.scrollY - 50,
+        }),
+    );
+    console.log(a);
+    setCategoriesTop(a);
+  }, [products]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -76,26 +56,23 @@ export default function Menu() {
   }, []);
 
   useEffect(() => {
-    categoriesWithProducts.length > 0 &&
-      (() => {
-        const closestCategory = categoriesWithProducts.find(
-          (category) => yLocation <= category.height,
-        );
+    const getCategoryFromScroll = () => {
+      for (const [category, top] of Object.entries(categoriesTop)) {
+        if (yLocation >= top) {
+          setSelected(category);
+        }
+      }
+    };
+    getCategoryFromScroll();
+  }, [yLocation]);
 
-        closestCategory && setSelected(closestCategory.name);
-      })();
-  }, [yLocation, categoriesWithProducts]);
-
-  //create a useEffect that scroll to selected section
   useEffect(() => {
-    const selectedCategory = categoriesWithProducts.find(
-      (category) => category.name === selected,
-    );
-    selectedCategory &&
+    scroll &&
       window.scrollTo({
-        top: selectedCategory.height,
+        top: categoriesTop[selected],
         behavior: "smooth",
       });
+    setScroll(false);
   }, [selected]);
 
   return (
@@ -108,16 +85,11 @@ export default function Menu() {
           categories={categories}
           selected={selected}
           setSelected={setSelected}
+          setScroll={setScroll}
         />
       )}
       {categories?.map((category) => (
-        <section
-          key={category.name}
-          id={category.name}
-          // ref={(element) => {
-          //   element && sectionRef.current.push(element);
-          // }}
-        >
+        <section key={category.name} id={category.name}>
           <div className={`text-4xl text-white font-bold py-2 px-2 bg-title`}>
             {category?.name}
           </div>

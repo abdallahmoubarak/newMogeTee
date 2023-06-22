@@ -4,6 +4,7 @@ export default function TopBar({
   categories,
   selected,
   setSelected,
+  setScroll,
 }: TopBarProps) {
   const topBarRef = useRef<HTMLDivElement>(null);
 
@@ -60,19 +61,20 @@ export default function TopBar({
         ref={topBarRef}
         className="p-2 py-3 overflow-auto flex items-center gap-2 w-full sticky top-0 bg-white z-10 shadow-md backdrop-filter backdrop-blur-lg bg-opacity-90 scrollbar-hide">
         {categories?.map((category, i) => (
-          <a key={i}>
-            <div
-              className={`whitespace-nowrap border shadow-md py-1 px-4 rounded-full text-sm cursor-pointer flex items-center gap-2 bg-white backdrop-filter backdrop-blur-lg  bg-opacity-60 
+          <div
+            key={i}
+            onClick={() => {
+              setSelected(category.name);
+              setScroll(true);
+            }}
+            className={`whitespace-nowrap border shadow-md py-1 px-4 rounded-full text-sm cursor-pointer flex items-center gap-2 bg-white backdrop-filter backdrop-blur-lg  bg-opacity-60 select-none
               ${
                 selected === category.name
                   ? "selected scale-125 mx-4 text-title"
                   : ""
               }`}>
-              <div onClick={() => setSelected(category.name)}>
-                {category.name}
-              </div>
-            </div>
-          </a>
+            {category.name}
+          </div>
         ))}
       </div>
     </>
