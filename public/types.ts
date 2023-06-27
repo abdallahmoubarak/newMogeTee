@@ -65,3 +65,9 @@ interface ButtonProps {
 interface CategoriesTop {
   [key: string]: number;
 }
+
+interface InputProps {
+  value: string;
+  setValue: Function;
+  placeholder: string;
+}

@@ -1,11 +1,15 @@
 import sendOrder from "@/utils/sendOrder";
 import { useState } from "react";
 import { BsWhatsapp } from "react-icons/bs";
+import Input from "./input";
 
 export default function Modal({ selectedItems, rate, setModal }: ModalProps) {
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
+  const [address, setAddress] = useState<string>("");
+  const [building, setBuilding] = useState<string>("");
+  const [floor, setFloor] = useState<string>("");
+
+  const [city, setCity] = useState<string>("");
   const Nabatiehpn = "9613085803";
   const Beirutpn = "96171446747";
 
@@ -40,15 +44,17 @@ export default function Modal({ selectedItems, rate, setModal }: ModalProps) {
             Beirut
           </button>
         </div>
-        <div className="py-4">
-          <div>Address</div>
-          <textarea
-            className="border border-title rounded-md px-4 py-1 w-full"
-            placeholder="Address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
+        <div className="border-b border-gray-200 h-5"></div>
+        <div className="py-2">
+          <Input placeholder="Address" value={address} setValue={setAddress} />
+          <Input
+            placeholder="Building"
+            value={building}
+            setValue={setBuilding}
           />
+          <Input placeholder="Floor" value={floor} setValue={setFloor} />
         </div>
+        <div className="border-b border-gray-200 h-5 mb-6"></div>
 
         <button
           onClick={() =>
@@ -57,7 +63,7 @@ export default function Modal({ selectedItems, rate, setModal }: ModalProps) {
                   selectedItems,
                   rate,
                   phoneNumber,
-                  address,
+                  address: address + building + floor,
                 })
               : confirm("Please select city / add address")
           }
