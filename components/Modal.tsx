@@ -63,7 +63,7 @@ export default function Modal({ selectedItems, rate, setModal }: ModalProps) {
                   selectedItems,
                   rate,
                   phoneNumber,
-                  address: address + building + floor,
+                  address: address + ", " + building + ", " + floor,
                 })
               : confirm("Please select city / add address")
           }
