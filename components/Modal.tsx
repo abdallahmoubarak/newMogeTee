@@ -1,7 +1,7 @@
 import sendOrder from "@/utils/sendOrder";
 import { useState } from "react";
 import { BsWhatsapp } from "react-icons/bs";
-import Input from "./input";
+import Input from "./Input";
 
 export default function Modal({ selectedItems, rate, setModal }: ModalProps) {
   const [phoneNumber, setPhoneNumber] = useState("");

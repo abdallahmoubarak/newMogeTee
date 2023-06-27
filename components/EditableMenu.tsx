@@ -52,7 +52,7 @@ export default function EditableMenu() {
       }
     };
     getCategoryFromScroll();
-  }, [yLocation]);
+  }, [yLocation, scroll, categoriesTop]);
 
   useEffect(() => {
     scroll &&

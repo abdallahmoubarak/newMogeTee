@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import ProductList from "./ProductList";
 import quicksort from "@/utils/quicksort";
@@ -72,7 +72,7 @@ export default function Menu() {
         behavior: "smooth",
       });
     setTimeout(() => setScroll(false), 2000);
-  }, [selected]);
+  }, [selected, scroll, categoriesTop]);
 
   return (
     <div>
