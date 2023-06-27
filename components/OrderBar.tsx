@@ -16,7 +16,7 @@ export default function OrderBar({
   return (
     <div
       id="orderBar"
-      className={`sticky bottom-0 left-0 right-0 bg-yellow-50 border-t-2 border-title text-title p-4 flex flex-col max-h-[20vh] gap-2`}>
+      className={`sticky bottom-0 left-0 right-0 bg-orange-50 border-t-2 border-title p-4 flex flex-col max-h-[20vh] gap-2`}>
       <div className="flex justify-between gap-2">
         <div className="overflow-y-auto border border-title  w-full max-h-[10vh] rounded-md bg-white px-1">
           {selectedItems.map((item, index) => (
