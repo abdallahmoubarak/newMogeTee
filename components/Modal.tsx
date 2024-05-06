@@ -34,11 +34,8 @@ export default function Modal({ selectedItems, rate, setModal }: ModalProps) {
             Nabatieh
           </button>
           <button
-            onClick={() => {
-              setCity("Beirut");
-              setPhoneNumber(Beirutpn);
-            }}
-            className={`block border border-title py-1 px-2 rounded ${
+            disabled = {true}
+            className={`block border border-gray-200 bg-gray-200 py-1 px-2 rounded cursor-not-allowed ${
               city === "Beirut" && "bg-title text-white"
             }`}>
             Beirut
